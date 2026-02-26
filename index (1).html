@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QMJ Smart - ҚМЖ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0a1a3a;
+  --blue: #0066cc;
+  --bg-light: #f8fafc;
+  --bg-dark: #0f172a;
+  --text-light: #1e293b;
+  --text-dark: #f8fafc;
+  --card-light: #ffffff;
+  --card-dark: #1e293b;
+  --border-light: #e2e8f0;
+  --border-dark: #334155;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-light);
+  line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Theme Toggle */
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--navy);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Header */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  padding: 80px 0 40px;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.logo-section {
+  flex-shrink: 0;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-title {
+  font-size: clamp(18px, 4vw, 32px);
+  font-weight: 800;
+  color: white;
+  line-height: 1.3;
+}
+
+/* Stats */
+.stats {
+  padding: 20px 0;
+  background: var(--card-light);
+  border-bottom: 1px solid var(--border-light);
+}
+
+body.dark .stats {
+  background: var(--card-dark);
+  border-bottom-color: var(--border-dark);
+}
+
+.stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 24px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.stat-number {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 800;
+  color: var(--navy);
+}
+
+body.dark .stat-number {
+  color: #60a5fa;
+}
+
+.stat-label {
+  font-size: 14px;
+  color: #64748b;
+}
+
+body.dark .stat-label {
+  color: #94a3b8;
+}
+
+/* Services */
+.services {
+  padding: 40px 0;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+body.dark .section-title {
+  color: var(--text-dark);
+}
+
+.service-row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 16px;
+  margin-bottom: 16px;
+  align-items: stretch;
+}
+
+.service-row:nth-child(even) {
+  grid-template-columns: 1.5fr 1fr;
+}
+
+.service-row:nth-child(even) .service-card {
+  order: 2;
+}
+
+.service-row:nth-child(even) .service-media {
+  order: 1;
+}
+
+.service-card {
+  background: var(--card-light);
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+body.dark .service-card {
+  background: var(--card-dark);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.service-icon {
+  width: 44px;
+  height: 44px;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.service-icon svg {
+  width: 22px;
+  height: 22px;
+  color: white;
+}
+
+.service-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+body.dark .service-card h3 {
+  color: #60a5fa;
+}
+
+.service-card p {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+body.dark .service-card p {
+  color: #94a3b8;
+}
+
+.service-media {
+  min-height: 120px;
+  background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+body.dark .service-media {
+  background: linear-gradient(135deg, #334155, #475569);
+  color: #94a3b8;
+}
+
+/* Features */
+.features {
+  padding: 40px 0;
+  background: var(--card-light);
+}
+
+body.dark .features {
+  background: var(--card-dark);
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg-light);
+  border-radius: 12px;
+  border-left: 3px solid var(--navy);
+}
+
+body.dark .feature-item {
+  background: var(--bg-dark);
+  border-left-color: #60a5fa;
+}
+
+.feature-icon {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.feature-icon svg {
+  width: 14px;
+  height: 14px;
+  color: white;
+}
+
+.feature-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  padding: 40px 0;
+  background: var(--navy);
+  color: white;
+  text-align: center;
+}
+
+body.dark .footer {
+  background: #020617;
+}
+
+.footer h2 {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  padding: 14px 28px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.social-btn:hover {
+  transform: translateY(-2px);
+}
+
+.social-btn.insta {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);
+}
+
+.social-btn.whatsapp {
+  background: #25d366;
+}
+
+/* Full Width Button */
+.fullwidth-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px;
+  background: linear-gradient(135deg, var(--navy), var(--blue));
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
+}
+
+.fullwidth-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+  .header {
+    padding: 70px 0 30px;
+  }
+  
+  .header-content {
+    gap: 16px;
+  }
+  
+  .logo {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .service-row,
+  .service-row:nth-child(even) {
+    grid-template-columns: 1fr;
+  }
+  
+  .service-row:nth-child(even) .service-card,
+  .service-row:nth-child(even) .service-media {
+    order: unset;
+  }
+  
+  .service-media {
+    min-height: 100px;
+  }
+  
+  .stats-row {
+    gap: 6px 16px;
+  }
+  
+  .stat-item {
+    font-size: 13px;
+  }
+  
+  .stat-number {
+    font-size: 18px;
+  }
+  
+  .features {
+    padding-bottom: 80px;
+  }
+}
+
+/* Padding for fixed button */
+body {
+  padding-bottom: 60px;
+}
+</style>
+</head>
+<body>
+
+<!-- Theme Toggle -->
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+  <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/>
+    <line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>
+  <svg class="moon-icon" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+  </svg>
+</button>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo-section">
+        <div class="logo">
+          <img src="logo.jpg" alt="QMJ Smart Logo">
+        </div>
+      </div>
+      <h1 class="hero-title">2000 + тарихшылардың 1 жыл уақытын үнемдеп, проблемасын шешкен ҚМЖ</h1>
+    </div>
+  </div>
+</header>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="stat-number">2000+</span>
+        <span class="stat-label">тарихшыға көмек</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3+</span>
+        <span class="stat-label">жыл тәжірибе</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">3</span>
+        <span class="stat-label">пән бір бағада</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">24/7</span>
+        <span class="stat-label">қолжетімділік</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services">
+  <div class="container">
+    <h2 class="section-title">Біз не ұсынамыз?</h2>
+    
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <h3>3 пәннен ҚМЖ</h3>
+        <p>Қазақстан тарихы, Дүниежүзі тарихы, Құқық негіздері — барлығы 1 бағада! 130 бұйрыққа сәйкес, Адал Азамат кіріктірілген.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #1</div>
+    </div>
+    
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>Презентациялар</h3>
+        <p>Әрбір тақырыпқа дайын слайдтар, визуалдық материалдар. Күнделік.kz-ге жүктеу оңай.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #2</div>
+    </div>
+    
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <h3>БЖБ, ТЖБ, жұмыс парақтары</h3>
+        <p>Бірінші және топтық жұмыс бағдарламалары, жеке/жұптық/топтық жұмыс парақтары тегін.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #3</div>
+    </div>
+    
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        </div>
+        <h3>Google Drive + Техподдержка</h3>
+        <p>Барлық материалдар ыңғайлы форматта. 10:00-22:00 аралығында көмек.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #4</div>
+    </div>
+    
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        </div>
+        <h3>ИИ тапсырмалар</h3>
+        <p>Жасанды интеллектпен жасалған ойындар, QR код тапсырмалары, тесттер, сәйкестендіру.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #5</div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-6"/><path d="M8 15l4-3 4 3"/></svg>
+        </div>
+        <h3>ҚМЖ-ның 1 сабағының үлгісі</h3>
+        <p>Әрбір тақырыпқа осы реттілікпен материалдар жүктелген. Google Drive арқылы қарау.</p>
+      </div>
+      <div class="service-media">
+        <a href="https://drive.google.com/drive/folders/1LQX1MuqVPCXA0gjiEJSRAcSLMwLIKk-a" target="_blank" style="color: inherit; text-decoration: none;">🔗 Google Drive ашу</a>
+      </div>
+    </div>
+
+    <div class="service-row">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+        </div>
+        <h3>Арнайы техподдержка бөлімі</h3>
+        <p>10:00-22:00 аралығында кез-келген сұрақтарыңызға жауап беріп, көмектесеміз.</p>
+      </div>
+      <div class="service-media">📷 Медиа файл #6</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">Неге бізді таңдайды?</h2>
+    
+    <div class="features-list">
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">Адал Азамат кіріктірілген</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">Нақты бағалау критерийлері</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">ҚМЖ-ның слайды тегін</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">БЖБ, ТЖБ жұмыстары тегін</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">3-4 тоқсан алсаңыз, 2-тоқсан сыйлыққа</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">Арнайы хабарландыру тобы</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">Уақытты үнемдеу, стресстен арылу</span>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <span class="feature-text">130 бұйрыққа сәйкес</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <h2>Байланыс</h2>
+    <div class="social-links">
+      <a href="https://www.instagram.com/smart_qmj" class="social-btn insta" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://wa.me/77718977685" class="social-btn whatsapp">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- Full Width Button -->
+<button class="fullwidth-btn" onclick="alert('Тапсырыс формасы жақында қосылады!')">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+  QMJ алу
+</button>
+
+<script>
+// Theme Toggle
+function toggleTheme() {
+  const body = document.body;
+  const sunIcon = document.querySelector('.sun-icon');
+  const moonIcon = document.querySelector('.moon-icon');
+  
+  body.classList.toggle('dark');
+  
+  if (body.classList.contains('dark')) {
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = 'block';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    sunIcon.style.display = 'block';
+    moonIcon.style.display = 'none';
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+// Load saved theme
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark') {
+  document.body.classList.add('dark');
+  document.querySelector('.sun-icon').style.display = 'none';
+  document.querySelector('.moon-icon').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
