@@ -9,6 +9,7 @@
 :root {
   --navy: #0a1a3a;
   --blue: #0066cc;
+  --accent: #00d4ff;
   --bg-light: #f8fafc;
   --bg-dark: #0f172a;
   --text-light: #1e293b;
@@ -48,7 +49,7 @@ body.dark {
   padding: 0 16px;
 }
 
-/* Theme Toggle */
+/* Theme Toggle - синяя анимация */
 .theme-toggle {
   position: fixed;
   top: 16px;
@@ -58,18 +59,21 @@ body.dark {
   height: 48px;
   border-radius: 50%;
   border: none;
-  background: var(--navy);
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 50%, var(--accent) 100%);
+  background-size: 200% 200%;
   color: white;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  transition: transform 0.2s;
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.4);
+  transition: all 0.3s ease;
+  animation: blueShift 3s ease infinite;
 }
 
 .theme-toggle:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 6px 25px rgba(0, 212, 255, 0.6);
 }
 
 .theme-toggle svg {
@@ -77,16 +81,42 @@ body.dark {
   height: 24px;
 }
 
+@keyframes blueShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 /* Header */
 .header {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
   padding: 80px 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(0,212,255,0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
 }
 
 .header-content {
   display: flex;
   align-items: center;
   gap: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .logo-section {
@@ -100,6 +130,14 @@ body.dark {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  border: 3px solid transparent;
+}
+
+.logo:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 30px rgba(0, 212, 255, 0.4);
+  border-color: var(--accent);
 }
 
 .logo img {
@@ -139,16 +177,31 @@ body.dark .stats {
   align-items: baseline;
   gap: 6px;
   white-space: nowrap;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+  border-radius: 12px;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, rgba(0,102,204,0.1) 0%, rgba(0,212,255,0.1) 100%);
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.2);
 }
 
 .stat-number {
   font-size: clamp(20px, 3vw, 28px);
   font-weight: 800;
   color: var(--navy);
+  transition: all 0.3s ease;
 }
 
 body.dark .stat-number {
   color: #60a5fa;
+}
+
+.stat-item:hover .stat-number {
+  color: var(--blue);
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
 }
 
 .stat-label {
@@ -196,6 +249,7 @@ body.dark .section-title {
   order: 1;
 }
 
+/* Service Card с синим glow */
 .service-card {
   background: var(--card-light);
   padding: 20px;
@@ -204,11 +258,36 @@ body.dark .section-title {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.service-card:hover::before {
+  left: 100%;
 }
 
 body.dark .service-card {
   background: var(--card-dark);
   box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 102, 204, 0.3);
+  border-color: rgba(0, 212, 255, 0.5);
 }
 
 .service-icon {
@@ -220,12 +299,41 @@ body.dark .service-card {
   align-items: center;
   justify-content: center;
   margin-bottom: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.service-card:hover .service-icon::after {
+  width: 100px;
+  height: 100px;
+}
+
+.service-card:hover .service-icon {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--accent) 100%);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
 }
 
 .service-icon svg {
   width: 22px;
   height: 22px;
   color: white;
+  position: relative;
+  z-index: 1;
 }
 
 .service-card h3 {
@@ -233,10 +341,15 @@ body.dark .service-card {
   font-weight: 700;
   color: var(--navy);
   margin-bottom: 8px;
+  transition: color 0.3s ease;
 }
 
 body.dark .service-card h3 {
   color: #60a5fa;
+}
+
+.service-card:hover h3 {
+  color: var(--blue);
 }
 
 .service-card p {
@@ -258,11 +371,46 @@ body.dark .service-card p {
   justify-content: center;
   color: #64748b;
   font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-media::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--blue) 0%, var(--accent) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.service-media:hover::before {
+  opacity: 1;
+}
+
+.service-media:hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 102, 204, 0.4);
+  color: white;
+}
+
+.service-media span, .service-media a {
+  position: relative;
+  z-index: 1;
 }
 
 body.dark .service-media {
   background: linear-gradient(135deg, #334155, #475569);
   color: #94a3b8;
+}
+
+body.dark .service-media:hover {
+  color: white;
 }
 
 /* Features */
@@ -291,11 +439,40 @@ body.dark .features {
   background: var(--bg-light);
   border-radius: 12px;
   border-left: 3px solid var(--navy);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.feature-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, rgba(0,102,204,0.1) 0%, transparent 100%);
+  transition: width 0.3s ease;
+}
+
+.feature-item:hover::before {
+  width: 100%;
+}
+
+.feature-item:hover {
+  transform: translateX(10px);
+  border-left-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.2);
 }
 
 body.dark .feature-item {
   background: var(--bg-dark);
   border-left-color: #60a5fa;
+}
+
+body.dark .feature-item:hover {
+  border-left-color: var(--accent);
 }
 
 .feature-icon {
@@ -307,6 +484,13 @@ body.dark .feature-item {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--accent) 100%);
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
 }
 
 .feature-icon svg {
@@ -318,6 +502,14 @@ body.dark .feature-item {
 .feature-text {
   font-size: 14px;
   font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.feature-item:hover .feature-text {
+  color: var(--blue);
+  font-weight: 600;
 }
 
 /* Footer */
@@ -326,6 +518,24 @@ body.dark .feature-item {
   background: var(--navy);
   color: white;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: scanline 3s linear infinite;
+}
+
+@keyframes scanline {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 body.dark .footer {
@@ -335,6 +545,8 @@ body.dark .footer {
 .footer h2 {
   font-size: 22px;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
 }
 
 .social-links {
@@ -342,8 +554,11 @@ body.dark .footer {
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
 }
 
+/* Social Buttons с синими эффектами */
 .social-btn {
   padding: 14px 28px;
   border-radius: 12px;
@@ -354,29 +569,53 @@ body.dark .footer {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: transform 0.2s;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background-size: 200% 200%;
+}
+
+.social-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.social-btn:hover::before {
+  left: 100%;
 }
 
 .social-btn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .social-btn.insta {
-  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743);
+  background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+  background-size: 300% 300%;
+  animation: gradientShift 4s ease infinite;
 }
 
 .social-btn.whatsapp {
-  background: #25d366;
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 50%, #00d4ff 100%);
+  background-size: 200% 200%;
+  animation: blueShift 3s ease infinite;
 }
 
-/* Full Width Button */
+/* Full Width Button - синий неон */
 .fullwidth-btn {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 16px 24px;
-  background: linear-gradient(135deg, var(--navy), var(--blue));
+  background: linear-gradient(90deg, var(--navy) 0%, var(--blue) 25%, var(--accent) 50%, var(--blue) 75%, var(--navy) 100%);
+  background-size: 200% 100%;
   color: white;
   border: none;
   font-size: 16px;
@@ -387,18 +626,47 @@ body.dark .footer {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.3);
-  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 -4px 20px rgba(0, 102, 204, 0.4);
+  transition: all 0.3s ease;
+  animation: gradientMove 3s linear infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.fullwidth-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+  transition: left 0.6s ease;
+}
+
+.fullwidth-btn:hover::before {
+  left: 100%;
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
 }
 
 .fullwidth-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 -6px 24px rgba(0,0,0,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 -8px 30px rgba(0, 212, 255, 0.6);
+  letter-spacing: 1px;
 }
 
 .fullwidth-btn svg {
   width: 20px;
   height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.fullwidth-btn:hover svg {
+  transform: rotate(15deg) scale(1.2);
 }
 
 /* Modal Styles */
@@ -439,8 +707,26 @@ body.dark .modal-content {
   justify-content: space-between;
   align-items: center;
   padding: 20px 24px;
-  background: linear-gradient(135deg, var(--navy), var(--blue));
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
   color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.3), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .modal-header h3 {
@@ -449,6 +735,8 @@ body.dark .modal-content {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .close-btn {
@@ -462,12 +750,16 @@ body.dark .modal-content {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s;
+  transition: all 0.3s ease;
   font-size: 20px;
+  position: relative;
+  z-index: 1;
 }
 
 .close-btn:hover {
   background: rgba(255,255,255,0.3);
+  transform: rotate(90deg) scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
 }
 
 .modal-iframe {
@@ -622,7 +914,7 @@ body {
         <h3>3 пәннен ҚМЖ</h3>
         <p>Қазақстан тарихы, Дүниежүзі тарихы, Құқық негіздерінен 5-11 сынып аралығында материалдар толық — 1 бағада!</p>
       </div>
-      <div class="service-media">📷 Медиа файл #1</div>
+      <div class="service-media"><span>📷 Медиа файл #1</span></div>
     </div>
     
     <div class="service-row">
@@ -633,7 +925,7 @@ body {
         <h3>Презентация</h3>
         <p>Әрбір тақырыпқа дайын слайд, презентация материалдары бірге беріледі!</p>
       </div>
-      <div class="service-media">📷 Медиа файл #2</div>
+      <div class="service-media"><span>📷 Медиа файл #2</span></div>
     </div>
     
     <div class="service-row">
@@ -644,7 +936,7 @@ body {
         <h3>БЖБ-ТЖБ жұмыстары</h3>
         <p>Қазақстан тарихы, Дүниежүзі тарихы, Құқық негіздерінен 5-11 сынып аралығында толық бжб және тжб жұмыстары беріледі!</p>
       </div>
-      <div class="service-media">📷 Медиа файл #3</div>
+      <div class="service-media"><span>📷 Медиа файл #3</span></div>
     </div>
     
     <div class="service-row">
@@ -655,7 +947,7 @@ body {
         <h3>Тех поддержка</h3>
         <p>Арнайы көмек тобымызда 10:00-22:00 уақыт аралығында кез-келген тарихтан сұрақтарыңызға көмектесіп отырамыз✅</p>
       </div>
-      <div class="service-media">📷 Медиа файл #4</div>
+      <div class="service-media"><span>📷 Медиа файл #4</span></div>
     </div>
     
     <div class="service-row">
@@ -666,7 +958,7 @@ body {
         <h3>ҚМЖ-құрылымы</h3>
         <p>ҚМЖ құрылымында Адал Азамат, ЖИ, Тарихи концепт және Құндылықтар қосылған✅</p>
       </div>
-      <div class="service-media">📷 Медиа файл #5</div>
+      <div class="service-media"><span>📷 Медиа файл #5</span></div>
     </div>
 
     <div class="service-row">
@@ -678,7 +970,7 @@ body {
         <p>3 пәннен барлық материалдар Google диск платформасында ыңғайлы реттілікпен сақталған. Қолдануға өте оңай және жинақы✅</p>
       </div>
       <div class="service-media">
-        <a href="https://drive.google.com/drive/folders/1LQX1MuqVPCXA0gjiEJSRAcSLMwLIKk-a" target="_blank" style="color: inherit; text-decoration: none;">🔗 Google Drive ашу</a>
+        <a href="https://drive.google.com/drive/folders/1LQX1MuqVPCXA0gjiEJSRAcSLMwLIKk-a " target="_blank" style="color: inherit; text-decoration: none;">🔗 Google Drive ашу</a>
       </div>
     </div>
 
@@ -690,7 +982,7 @@ body {
         <h3>Сапа</h3>
         <p>Материалдар орталығымыздың арнайы білікті мамандарымен жасалады. 3 жылдық тәжірибе✅ 2000+ риза мұғалім🤝</p>
       </div>
-      <div class="service-media">📷 Медиа файл #6</div>
+      <div class="service-media"><span>📷 Медиа файл #6</span></div>
     </div>
 
     <div class="service-row">
@@ -701,7 +993,7 @@ body {
         <h3>Жұмыс парағы</h3>
         <p>Әрбір тақырыпқа сәйкес жеке жұмыс парақтар салынған, ҚМЖ-мен бірге беріледі✅</p>
       </div>
-      <div class="service-media">📷 Медиа файл #7</div>
+      <div class="service-media"><span>📷 Медиа файл #7</span></div>
     </div>
 
     <div class="service-row">
@@ -712,7 +1004,7 @@ body {
         <h3>Шексіз қолжетімділік</h3>
         <p>Қмж, бжб, тжб жұмыстары 24/7 кез-келген уақытта қолжетімді. 💯 Жүктеуге жеңіл, тіркеуге ыңғайлы✅</p>
       </div>
-      <div class="service-media">📷 Медиа файл #8</div>
+      <div class="service-media"><span>📷 Медиа файл #8</span></div>
     </div>
   </div>
 </section>
@@ -780,11 +1072,11 @@ body {
   <div class="container">
     <h2>Байланыс</h2>
     <div class="social-links">
-      <a href="https://www.instagram.com/smart_qmj" class="social-btn insta" target="_blank">
+      <a href="https://www.instagram.com/smart_qmj " class="social-btn insta" target="_blank">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         Instagram
       </a>
-      <a href="https://wa.me/77718977685" class="social-btn whatsapp">
+      <a href="https://wa.me/77718977685 " class="social-btn whatsapp">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         WhatsApp
       </a>
@@ -852,7 +1144,7 @@ function openOrderModal() {
   const iframe = document.getElementById('orderFrame');
   
   // Google Form URL
-  iframe.src = 'https://forms.gle/Kp8VyHSdWRWS2jEy5';
+  iframe.src = 'https://forms.gle/Kp8VyHSdWRWS2jEy5 ';
   modal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
